@@ -15,7 +15,7 @@ gulp.task('server', function() {
 });
 // Styles
 gulp.task('styles', function() {
-    return gulp.src('src/sass/*.+(scss|sass)')
+    return gulp.src('src/sass/**/*.+(scss|sass)')
             .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
             .pipe(rename({
                     prefix: "",
@@ -32,7 +32,7 @@ gulp.task('styles', function() {
 });
 // Watch css + html
 gulp.task('watch', function() {
-    gulp.watch('src/sass/*.+(scss|sass)', gulp.parallel('styles'));
+    gulp.watch('src/sass/**/*.+(scss|sass)', gulp.parallel('styles'));
     gulp.watch('src/*.html').on('change', browserSync.reload);
 });
 // Default
