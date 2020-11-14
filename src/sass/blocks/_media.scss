@@ -22,6 +22,12 @@
             max-width: 215px;
         }
     }
+    .consultation {
+        padding: 0 20px;
+        .title {
+            font-size: 30px;
+        }
+    }
 }
 @media (max-width: 767px) {
     .header {
@@ -75,6 +81,11 @@
             margin-top: 10px;
         }
     }
+    .consultation {
+        .title {
+            font-size: 24px;
+        }
+    }
 }
 @media (max-width: 575px) {
     .header {
@@ -114,6 +125,22 @@
     .advantages {
         &__item {
             max-width: 100%;
+        }
+    }
+    .consultation {
+        padding: 60px 20px;
+        .title {
+            font-size: 20px;
+            text-align: center;
+            line-height: 35px;
+        }
+        &__descr {
+            font-size: 17px;
+            margin-top: 45px;
+            text-align: center;
+        }
+        .feed-form {
+            width: 100%;
         }
     }
 }
