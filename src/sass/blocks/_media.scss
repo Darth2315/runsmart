@@ -1,4 +1,4 @@
-@media (max-width: 991px) {
+@media (max-width: 992px) {
     .header {
         padding: 0 20px;
         &__logo {
@@ -28,8 +28,14 @@
             font-size: 30px;
         }
     }
+    .carousel {
+        width: 70%;
+        &__slide {
+            height: 70%;
+        }
+    }
 }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     .header {
         padding: 0 15px;
         &__logo {
@@ -86,8 +92,14 @@
             font-size: 24px;
         }
     }
+    .carousel {
+        width: 60%;
+        &__slide {
+            height: 60%;
+        }
+    }
 }
-@media (max-width: 575px) {
+@media (max-width: 576px) {
     .header {
         padding: 0 10px;
         &__official {
@@ -141,6 +153,18 @@
         }
         .feed-form {
             width: 100%;
+        }
+    }
+    .carousel {
+        width: 90%;
+        &__slide {
+            height: 90%;
+        }
+        &__prev {
+            display: none;
+        }
+        &__next {
+            display: none;
         }
     }
 }
