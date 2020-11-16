@@ -1,42 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
 
-    // slider #1
-    // const slides = document.querySelectorAll('.carousel__inner > div'),
-    //       next = document.querySelector('.carousel__next'),
-    //       prev = document.querySelector('.carousel__prev');
-
-    // let slideIndex = 1;
-
-    // function showSlides(n) {
-    //     if (n > slides.length) {
-    //         slideIndex = 1;
-    //     }
-    //     if (n < 1) {
-    //         slideIndex = slides.length;
-    //     }
-
-    //     slides.forEach(item => {
-    //         item.classList.add('hide');
-    //         item.classList.remove('show');
-    //     });
-
-    //     slides[slideIndex - 1].classList.add('show', 'fade');
-    //     slides[slideIndex - 1].classList.remove('hide');
-    // }
-    // showSlides(slideIndex);
-
-    // function plusSlides(n) {
-    //     showSlides(slideIndex +=n);
-    // }
-
-    // prev.addEventListener('click', () => {
-    //     plusSlides(-1);
-    // });
-    // next.addEventListener('click', () => {
-    //     plusSlides(1);
-    // });
-
-    // slider #2
+    // slider
     const slider = document.querySelector('.carousel'),
           slides = document.querySelectorAll('.carousel__slide'),
           next = document.querySelector('.carousel__next'),
@@ -76,6 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
         dots[slideIndex - 1].style.opacity = 1;
     }
 
+    // dots click
     dots.forEach(item => {
         item.addEventListener('click', (e) => {
             const slideTo = e.target.getAttribute('data-slide-to');
@@ -83,7 +48,6 @@ window.addEventListener('DOMContentLoaded', () => {
             offset = +width.slice(0, width.length - 2) * (slideTo - 1);
             
             slidesField.style.transform = `translateX(-${offset}px)`;
-            
             currentDot();
         });
     });
@@ -102,9 +66,9 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             slideIndex++;
         }
-
         currentDot();
     });
+
     // arrow prev
     prev.addEventListener('click', () => {
         if (offset == 0) {
@@ -119,7 +83,6 @@ window.addEventListener('DOMContentLoaded', () => {
         } else {
             slideIndex--;
         }
-
         currentDot();
     });
 });
