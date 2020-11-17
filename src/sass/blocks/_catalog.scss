@@ -5,6 +5,8 @@
         list-style-type: none;
         display: flex;
         justify-content: center;
+        padding-left: 0;
+        margin-bottom: 0;
     }
     &__tab {
         width: 220px;
@@ -16,5 +18,16 @@
         text-align: center;
         text-transform: uppercase;
         line-height: 48px;
+        margin: 0 5px;
+        transform: skew(-25deg);
+        cursor: pointer;
+        div {
+            transform: skew(25deg);
+        }
+        &_active {
+            background-color: $main_color;
+            color: #ffffff;
+            border: none;
+        }
     }
 }
