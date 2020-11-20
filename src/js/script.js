@@ -85,4 +85,58 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         currentDot();
     });
+
+    // TABS
+
+    const tabContent = document.querySelectorAll('.catalog__content'),
+          tabWrapper = document.querySelector('.catalog__tabs'),
+          tabs = document.querySelectorAll('.catalog__tab');
+
+    function hideTabContent() {
+        tabContent.forEach(item => {
+            item.style.display = 'none';
+        });
+        tabs.forEach(item => {
+            item.classList.remove('catalog__tab_active');
+        });
+    }
+
+    function showTabContent(i=0) {
+        tabContent[i].style.display = 'flex';
+        tabs[i].classList.add('catalog__tab_active');
+    }
+
+    hideTabContent();
+    showTabContent();
+
+    tabWrapper.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target && target.classList.contains('catalog__tab')) {
+            console.log('2click');
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+        }
+    });
+
+    // Details in card & Back in card
+    const details = document.querySelectorAll('.catalog-item__link'),
+          itemContent = document.querySelectorAll('.catalog-item__content'),
+          itemList = document.querySelectorAll('.catalog-item__list'),
+          backBtn = document.querySelectorAll('.catalog-item__back');
+
+    function toggleTabActiveClass(trigger) {
+        trigger.forEach((item, i) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                itemContent[i].classList.toggle('catalog-item__content_active');
+                itemList[i].classList.toggle('catalog-item__list_active');
+            });
+        });
+    }
+    toggleTabActiveClass(details);
+    toggleTabActiveClass(backBtn);
 });

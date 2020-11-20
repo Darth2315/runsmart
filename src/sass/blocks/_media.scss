@@ -98,6 +98,15 @@
             height: 60%;
         }
     }
+    .catalog {
+        &__tabs {
+            margin-top: 45px;
+        }
+        &__tab {
+            width: 170px;
+            font-size: 16px;
+        }
+    }
 }
 @media (max-width: 576px) {
     .header {
@@ -165,6 +174,23 @@
         }
         &__next {
             display: none;
+        }
+    }
+    .catalog {
+        .title {
+            font-size: 25px;
+        }
+        &__content {
+            margin-top: 45px;
+        }
+        &__tabs {
+            margin-top: 45px;
+            flex-wrap: wrap;
+        }
+        &__tab {
+            width: 130px;
+            font-size: 13px;
+            margin-top: 8px;
         }
     }
 }
