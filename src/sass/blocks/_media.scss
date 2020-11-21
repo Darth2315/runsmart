@@ -1,3 +1,20 @@
+@media (max-width: 1200px) {
+    .footer {
+        &__info {
+            width: 350px;
+            height: 250px;
+            padding: 50px 50px 60px 50px;
+        }
+        &__address {
+            font-size: 18px;
+            line-height: 18px;
+        }
+        &__phone {
+            font-size: 18px;
+            line-height: 18px;
+        }
+    } 
+}
 @media (max-width: 992px) {
     .header {
         padding: 0 20px;
@@ -37,6 +54,11 @@
     .reviews {
         padding-left: 20px;
     }
+    .footer {
+        &__info {
+            left: 65%;
+        }
+    } 
 }
 @media (max-width: 768px) {
     .header {
@@ -131,6 +153,29 @@
             font-size: 15px;
         }
     }
+    .footer {
+        &__info {
+            left: 78%;
+            width: 260px;
+            height: 200px;
+            padding: 30px 30px 30px 30px;
+        }
+        &__address {
+            font-size: 16px;
+            line-height: 16px;
+        }
+        &__phone {
+            font-size: 16px;
+            line-height: 16px;
+        }
+        &__social-item {
+            width: 37px;
+            height: 37px;
+            img {
+                height: 20px;
+            }
+        }
+    } 
 }
 @media (max-width: 576px) {
     .header {
@@ -252,4 +297,30 @@
             font-size: 15px;
         }
     }
+    .footer {
+        &__info {
+            left: 140px;
+            top: 104px;
+            width: 260px;
+            height: 160px;
+            padding: 20px;
+        }
+        &__address {
+            font-size: 16px;
+            line-height: 16px;
+            margin-bottom: 25px;
+        }
+        &__phone {
+            font-size: 16px;
+            line-height: 16px;
+            margin-bottom: 25px;
+        }
+        &__social-item {
+            width: 37px;
+            height: 37px;
+            img {
+                height: 20px;
+            }
+        }
+    } 
 }
