@@ -139,4 +139,67 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     toggleTabActiveClass(details);
     toggleTabActiveClass(backBtn);
+
+    // Modal
+    const overlay = document.querySelector('.overlay'),
+          modalConsalt = document.querySelector('#consultation'),
+          modalOrder = document.querySelector('#order'),
+          modalThanks = document.querySelector('#thanks'),
+          btnConsalt = document.querySelectorAll('[data-modal=consultation]'),
+          btnCatalog = document.querySelectorAll('.catalog .button'),
+          close = document.querySelectorAll('.modal__close'),
+          modalDescr = document.querySelectorAll('#order .modal__descr'),
+          itemSubtitle = document.querySelectorAll('.catalog-item__subtitle');
+
+
+    function showModal(modal) {
+        overlay.style.display = 'block';
+        modal.style.display = 'block';
+        modal.classList.add('fade');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modal) {
+        overlay.style.display = 'none';
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function showModalByTrigger(trigger, modal) {
+        trigger.forEach((item, i) => {
+            item.addEventListener('click', () => {
+                showModal(modal);
+                
+                if (item.classList.contains('button_mini')) {
+                    const titleItem = itemSubtitle[i].textContent;
+                    
+                    modalDescr.forEach(title => {
+                        title.textContent = titleItem;
+                    });
+                }           
+            });
+        });
+    }
+    showModalByTrigger(btnConsalt, modalConsalt);
+    showModalByTrigger(btnCatalog, modalOrder);
+
+    function closeModalByTrigger(trigger, modal) {
+        trigger.forEach(item => {
+            item.addEventListener('click', () => {
+                closeModal(modal);
+            });
+        });
+    }
+    closeModalByTrigger(close, modalConsalt);
+    closeModalByTrigger(close, modalOrder);
+
+    function closeModalByEscape(modal) {
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape' && modal.style.display === 'block') {
+                closeModal(modal);
+            }
+        });
+    }
+    closeModalByEscape(modalConsalt);
+    closeModalByEscape(modalOrder);
 });
