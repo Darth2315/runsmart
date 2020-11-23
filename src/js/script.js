@@ -202,4 +202,54 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     closeModalByEscape(modalConsalt);
     closeModalByEscape(modalOrder);
+
+    //Form send and validation
+    const forms = document.querySelectorAll('form'),
+          inputs = document.querySelectorAll('input');
+
+    const message = {
+        nameError: "Ім'я має містити 2 і більше символів",
+        phoneError: "Введіть номер телефону в форматі +380978442210",
+        emailError: "Адреса поштової скриньки має містити @",
+        loading: "Завантаження...",
+        success: "Відправка пройшла успішно!",
+        error: "Щось пішло не так..."
+    };
+
+    const postData = async (url, data) => {
+        document.querySelector('.status').textContent(message.loading);
+        let res = await fetch(url, {
+            method: 'POST',
+            body: data
+        });
+        return await res.text();
+    };
+
+    forms.forEach(item => {
+        item.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.style.cssText = `
+                font-size: 15px;
+                margin: 15px auto;
+                color: red;
+            `;
+            statusMessage.textContent = message.nameError;
+            item.appendChild(statusMessage);
+
+            const formData = new FormData(item);
+
+            postData('server.php', formData)
+            .then(res => {
+                console.log(res);
+                statusMessage.textContent = message.success;
+            })
+            .catch(() => statusMessage.textContent = message.error)
+            .finally(() => {
+                clearInputs();
+            });
+        });
+    });
+    
 });
