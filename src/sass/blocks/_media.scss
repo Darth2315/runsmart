@@ -229,9 +229,9 @@
             margin-top: 45px;
             text-align: center;
         }
-        .feed-form {
-            width: 100%;
-        }
+    }
+    .feed-form {
+        width: 100%;
     }
     .carousel {
         width: 90%;
@@ -321,6 +321,20 @@
             img {
                 height: 20px;
             }
+        }
+    }
+    .modal {
+        width: 300px;
+        padding: 38px 20px 40px 20px;
+        &__close {
+            top: 10px;
+            right: 10px;
+        }
+        &__subtitle {
+            font-size: 16px;
+        }
+        &__descr {
+            font-size: 13px;
         }
     } 
 }
