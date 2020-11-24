@@ -205,11 +205,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //Form send and validation
     const forms = document.querySelectorAll('form'),
-          inputs = document.querySelectorAll('input');
+          inputs = document.querySelectorAll('input'),
+          phoneInputs = document.querySelectorAll('input[name="phone"]');
 
     const message = {
         nameError: "Ім'я має містити 2 і більше символів",
-        phoneError: "Введіть номер телефону в форматі +380978442210",
+        phoneError: "Введіть номер телефону в форматі 380978442210",
         emailError: "Адреса поштової скриньки має містити @",
         loading: "Завантаження...",
         success: "Відправка пройшла успішно!",
@@ -217,7 +218,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     const postData = async (url, data) => {
-        document.querySelector('.status').textContent(message.loading);
+        document.querySelector('.status').textContent = message.loading;
         let res = await fetch(url, {
             method: 'POST',
             body: data
@@ -225,17 +226,39 @@ window.addEventListener('DOMContentLoaded', () => {
         return await res.text();
     };
 
+    const clearInputs = () => {
+        inputs.forEach(item => {
+            item.value = '';
+        });
+    };
+
+    // phoneInputs.forEach(item => {
+    //     item.addEventListener('input', () => {
+    //         item.value = item.value.replace(/\D/, '');
+
+    //         let attantionMessage = document.createElement('div');
+    //         attantionMessage.textContent = message.phoneError;
+    //         attantionMessage.classList.add('attantionMessage');
+    //         item.style.border = '2px solid red';
+
+    //         if (item.value.length < 12 && !document.querySelector('.attantionMessage')) {
+    //             item.parentNode.insertBefore(attantionMessage, item.nextSibling);
+    //         } else if (item.value.length == 12 && document.querySelector('.attantionMessage')) {
+    //             document.querySelector('.attantionMessage').remove();
+    //             item.style.border = 'none';
+    //         }
+
+    //         if (item.value.length > 12) {
+    //             console.log('Alarm');
+    //         }
+    //     });
+    // });
+
     forms.forEach(item => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
             let statusMessage = document.createElement('div');
             statusMessage.classList.add('status');
-            statusMessage.style.cssText = `
-                font-size: 15px;
-                margin: 15px auto;
-                color: red;
-            `;
-            statusMessage.textContent = message.nameError;
             item.appendChild(statusMessage);
 
             const formData = new FormData(item);
@@ -248,8 +271,30 @@ window.addEventListener('DOMContentLoaded', () => {
             .catch(() => statusMessage.textContent = message.error)
             .finally(() => {
                 clearInputs();
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 5000);
             });
         });
     });
-    
+ 
+
+    // tel mask
+
+    function mask(selector) {
+        function createMask(event) {
+            let matrix = '+38 (___) ___ __ __',
+                i = 0,
+                def = matrix.replace(/\D/g, ''),
+                val = this.value.replace(/\D/g, '');
+
+            if (def.length > val.length) {
+                val = def;
+            }
+
+            this.value = matrix.replace(/./g, function(a) {
+                return [_\d].test(a);
+            });
+        }
+    }
 });
