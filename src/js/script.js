@@ -206,16 +206,40 @@ window.addEventListener('DOMContentLoaded', () => {
     //Form send and validation
     const forms = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
-          phoneInputs = document.querySelectorAll('input[name="phone"]');
+          phoneInputs = document.querySelectorAll('input[name="phone"]'),
+          nameInputs = document.querySelectorAll('input[name="name"]');
 
     const message = {
         nameError: "Ім'я має містити 2 і більше символів",
-        phoneError: "Введіть номер телефону в форматі 380978442210",
+        phoneError: "Некоректний номер телефону",
         emailError: "Адреса поштової скриньки має містити @",
         loading: "Завантаження...",
         success: "Відправка пройшла успішно!",
         error: "Щось пішло не так..."
     };
+
+    // function checkInputs(inputName, typeMessage, numberOfSymbol) {
+    //     inputName.forEach(item => {
+    //         item.addEventListener('input', () => {
+    
+    //             let attantionMessage = document.createElement('div');
+    //             attantionMessage.textContent = typeMessage;
+    //             attantionMessage.classList.add('attantionMessage');
+                
+    //             if (typeMessage === typeMessage) {
+    //                 if (item.value.length < numberOfSymbol && !document.querySelector('.attantionMessage')) {
+    //                     item.parentNode.insertBefore(attantionMessage, item.nextSibling);
+    //                     item.style.border = '2px solid red';
+    //                 } else if (item.value.length == numberOfSymbol && document.querySelector('.attantionMessage')) {
+    //                     document.querySelector('.attantionMessage').remove();
+    //                     item.style.border = 'none';
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
+    // checkInputs(phoneInputs, message.phoneError, 19);
+    // checkInputs(nameInputs, message.nameError, 2);
 
     const postData = async (url, data) => {
         document.querySelector('.status').textContent = message.loading;
@@ -231,29 +255,7 @@ window.addEventListener('DOMContentLoaded', () => {
             item.value = '';
         });
     };
-
-    // phoneInputs.forEach(item => {
-    //     item.addEventListener('input', () => {
-    //         item.value = item.value.replace(/\D/, '');
-
-    //         let attantionMessage = document.createElement('div');
-    //         attantionMessage.textContent = message.phoneError;
-    //         attantionMessage.classList.add('attantionMessage');
-    //         item.style.border = '2px solid red';
-
-    //         if (item.value.length < 12 && !document.querySelector('.attantionMessage')) {
-    //             item.parentNode.insertBefore(attantionMessage, item.nextSibling);
-    //         } else if (item.value.length == 12 && document.querySelector('.attantionMessage')) {
-    //             document.querySelector('.attantionMessage').remove();
-    //             item.style.border = 'none';
-    //         }
-
-    //         if (item.value.length > 12) {
-    //             console.log('Alarm');
-    //         }
-    //     });
-    // });
-
+    
     forms.forEach(item => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -280,21 +282,46 @@ window.addEventListener('DOMContentLoaded', () => {
  
 
     // tel mask
+    let setCursorPosition = (pos, elem) => {
+        elem.focus();
 
-    function mask(selector) {
-        function createMask(event) {
-            let matrix = '+38 (___) ___ __ __',
-                i = 0,
-                def = matrix.replace(/\D/g, ''),
-                val = this.value.replace(/\D/g, '');
+        if (elem.setSelectionRange) {
+            elem.setSelectionRange(pos, pos);
+        } else if (elem.createTextRange) {
+            let range = elem.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', pos);
+            range.moveStart('character', pos);
+            range.select();
+        }
+    };
 
-            if (def.length > val.length) {
-                val = def;
+    function createMask(event) {
+        let matrix = '+38 (0__) ___ __ __',
+            i = 0,
+            def = matrix.replace(/\D/g, ''),
+            val = this.value.replace(/\D/g, '');
+
+        if (def.length > val.length) {
+            val = def;
+        }
+
+        this.value = matrix.replace(/./g, function(a) {
+            return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a;
+        });
+
+        if (event.type === 'blur') {
+            if (this.value.length == 2) {
+                this.value = '';
             }
-
-            this.value = matrix.replace(/./g, function(a) {
-                return [_\d].test(a);
-            });
+        } else {
+            setCursorPosition(this.value.length, this);
         }
     }
+
+    phoneInputs.forEach(item => {
+        item.addEventListener('input', createMask);
+        item.addEventListener('blur', createMask);
+        item.addEventListener('focus', createMask);
+    });
 });
