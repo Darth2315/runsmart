@@ -111,10 +111,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     tabWrapper.addEventListener('click', (e) => {
         const target = e.target;
-        if (target && target.classList.contains('catalog__tab')) {
+        if (target && target.closest('.catalog__tab')) {
             console.log('2click');
             tabs.forEach((item, i) => {
-                if (target == item) {
+                if (target == item || target.parentElement == item) {
                     hideTabContent();
                     showTabContent(i);
                 }
