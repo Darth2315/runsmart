@@ -20,4 +20,20 @@
     &_mt25 {
         margin-top: 25px;
     }
+    .attantionMessage {
+        font-size: 12px;
+        text-align: center;
+        margin-bottom: 20px;
+        color: red;
+    }
+    .status {
+        font-size: 15px;
+        margin: 15px auto;
+        color: red;
+        &_white {
+            font-size: 15px;
+            margin: 15px auto;
+            color: #ffffff;
+        }
+    }
 }

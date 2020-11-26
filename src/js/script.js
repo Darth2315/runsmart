@@ -112,7 +112,6 @@ window.addEventListener('DOMContentLoaded', () => {
     tabWrapper.addEventListener('click', (e) => {
         const target = e.target;
         if (target && target.closest('.catalog__tab')) {
-            console.log('2click');
             tabs.forEach((item, i) => {
                 if (target == item || target.parentElement == item) {
                     hideTabContent();
@@ -260,12 +259,18 @@ window.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
             let statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
+            
+            if (item.closest('.consultation')) {
+                statusMessage.classList.add('status', 'status_white');
+                console.log('hello');
+            } else {
+                statusMessage.classList.add('status');
+            }
             item.appendChild(statusMessage);
 
             const formData = new FormData(item);
 
-            postData('server.php', formData)
+            postData('mailer/smart.php', formData)
             .then(res => {
                 console.log(res);
                 statusMessage.textContent = message.success;
