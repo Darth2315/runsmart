@@ -1,5 +1,5 @@
 <?php 
-
+echo var_dump($_POST);
 $name = $_POST['name'];
 $phone = $_POST['phone'];
 $email = $_POST['email'];
@@ -11,14 +11,14 @@ $mail->CharSet = 'utf-8';
 // $mail->SMTPDebug = 3;                               // Enable verbose debug output
 
 $mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+$mail->Host = 'smtp.ukr.net';  // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'gabermotaa@gmail.com';                 // Наш логин
-$mail->Password = 'www12345';                           // Наш пароль от ящика
+$mail->Username = 'sasha-a@ukr.net';                 // Наш логин
+$mail->Password = '4pl9V1cQG4uK';                           // Наш пароль от ящика
 $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 465;                                    // TCP port to connect to
  
-$mail->setFrom('gabermotaa@gmail.com', 'RunSmart');   // От кого письмо 
+$mail->setFrom('sasha-a@ukr.net', 'RunSmart');   // От кого письмо 
 $mail->addAddress('a.r.androschuk@gmail.com');     // Add a recipient
 //$mail->addAddress('ellen@example.com');               // Name is optional
 //$mail->addReplyTo('info@example.com', 'Information');

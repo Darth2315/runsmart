@@ -152,16 +152,25 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     function showModal(modal) {
+        modal.classList.remove('fade-out');
+        overlay.classList.remove('fade-out');
+        overlay.classList.add('fade-in');
+        modal.classList.add('fade-in');
         overlay.style.display = 'block';
-        modal.style.display = 'block';
-        modal.classList.add('fade');
+        modal.style.display = 'block';       
         document.body.style.overflow = 'hidden';
     }
 
     function closeModal(modal) {
-        overlay.style.display = 'none';
-        modal.style.display = 'none';
+        modal.classList.remove('fade-in');
+        overlay.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        overlay.classList.add('fade-out');
         document.body.style.overflow = '';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            modal.style.display = 'none';
+        }, 500);
     }
 
     function showModalByTrigger(trigger, modal) {
@@ -212,7 +221,7 @@ window.addEventListener('DOMContentLoaded', () => {
         nameError: "Ім'я має містити 2 і більше символів",
         phoneError: "Некоректний номер телефону",
         emailError: "Адреса поштової скриньки має містити @",
-        loading: "Завантаження...",
+        loading: '../img/spinner.svg',
         success: "Відправка пройшла успішно!",
         error: "Щось пішло не так..."
     };
@@ -241,7 +250,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // checkInputs(nameInputs, message.nameError, 2);
 
     const postData = async (url, data) => {
-        document.querySelector('.status').textContent = message.loading;
         let res = await fetch(url, {
             method: 'POST',
             body: data
@@ -258,28 +266,27 @@ window.addEventListener('DOMContentLoaded', () => {
     forms.forEach(item => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
-            let statusMessage = document.createElement('div');
             
-            if (item.closest('.consultation')) {
-                statusMessage.classList.add('status', 'status_white');
-                console.log('hello');
-            } else {
-                statusMessage.classList.add('status');
-            }
-            item.appendChild(statusMessage);
+            const spinner = document.createElement('img');
+            spinner.src = message.loading;
+            spinner.classList.add('modal__spinner');
+            item.appendChild(spinner);
 
             const formData = new FormData(item);
 
             postData('mailer/smart.php', formData)
             .then(res => {
                 console.log(res);
-                statusMessage.textContent = message.success;
+                showModal(modalThanks);
             })
-            .catch(() => statusMessage.textContent = message.error)
+            .catch(() => modalThanks.textContent = message.error)
             .finally(() => {
                 clearInputs();
+                spinner.remove();
+                modalConsalt.style.display = 'none';
+                modalOrder.style.display = 'none';
                 setTimeout(() => {
-                    statusMessage.remove();
+                    closeModal(modalThanks);
                 }, 5000);
             });
         });
