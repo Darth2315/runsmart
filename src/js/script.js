@@ -150,6 +150,7 @@ window.addEventListener('DOMContentLoaded', () => {
           modalDescr = document.querySelectorAll('#order .modal__descr'),
           itemSubtitle = document.querySelectorAll('.catalog-item__subtitle');
 
+    let scroll = calcScroll();
 
     function showModal(modal) {
         modal.classList.remove('fade-out');
@@ -157,7 +158,8 @@ window.addEventListener('DOMContentLoaded', () => {
         overlay.classList.add('fade-in');
         modal.classList.add('fade-in');
         overlay.style.display = 'block';
-        modal.style.display = 'block';       
+        modal.style.display = 'block';
+        document.body.style.marginRight = `${scroll}px`;       
         document.body.style.overflow = 'hidden';
     }
 
@@ -167,6 +169,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('fade-out');
         overlay.classList.add('fade-out');
         document.body.style.overflow = '';
+        document.body.style.marginRight = '0px';
         setTimeout(() => {
             overlay.style.display = 'none';
             modal.style.display = 'none';
@@ -221,6 +224,21 @@ window.addEventListener('DOMContentLoaded', () => {
     closeModalByOverlay(modalConsalt);
     closeModalByOverlay(modalOrder);
     closeModalByOverlay(modalThanks);
+
+    // Jump scroll
+    function calcScroll() {
+        const div = document.createElement('div');
+        div.style.width = '50px';
+        div.style.height = '50px';
+        div.style.overflowY = 'scroll';
+        div.style.visibility = 'hidden';
+        document.body.appendChild(div);
+
+        let scrollWidth = div.offsetWidth - div.clientWidth;
+        div.remove();
+
+        return scrollWidth;
+    }
 
     //Form send and validation
     const forms = document.querySelectorAll('form'),
