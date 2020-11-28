@@ -211,6 +211,17 @@ window.addEventListener('DOMContentLoaded', () => {
     closeModalByEscape(modalConsalt);
     closeModalByEscape(modalOrder);
 
+    function closeModalByOverlay(modal) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeModal(modal);
+            }
+        });
+    }
+    closeModalByOverlay(modalConsalt);
+    closeModalByOverlay(modalOrder);
+    closeModalByOverlay(modalThanks);
+
     //Form send and validation
     const forms = document.querySelectorAll('form'),
           inputs = document.querySelectorAll('input'),
