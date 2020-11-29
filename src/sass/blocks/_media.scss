@@ -58,7 +58,10 @@
         &__info {
             left: 65%;
         }
-    } 
+    }
+    .pageup {
+        right: 15px;
+    }
 }
 @media (max-width: 768px) {
     .header {
@@ -175,7 +178,10 @@
                 height: 20px;
             }
         }
-    } 
+    }
+    .pageup {
+        right: 10px;
+    }
 }
 @media (max-width: 576px) {
     .header {
@@ -336,5 +342,8 @@
         &__descr {
             font-size: 13px;
         }
-    } 
+    }
+    .pageup {
+        right: 5px;
+    }
 }

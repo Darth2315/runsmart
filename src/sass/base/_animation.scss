@@ -1,23 +1,51 @@
-.fade-in {
-    animation: fadeIn ease .5s;
+.fadeIn {
+    animation: fadeIn linear .5s;
 }
 @keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
+  0% {
+    opacity:0;
   }
+  100% {
+    opacity:1;
+  }
+}
 
-.fade-out {
-    animation: fadeOut ease .5s;
-  }
-  @keyframes fadeOut {
+.fadeOut {
+    animation: fadeOut linear .5s;
+}
+@keyframes fadeOut {
     0% {
-      opacity:1;
+        opacity:1;
     }
     100% {
-      opacity:0;
+        opacity:0;
     }
-  }
+}
+
+@keyframes heartbeat {
+    from {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+.fadeInUp {
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}

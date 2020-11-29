@@ -153,10 +153,10 @@ window.addEventListener('DOMContentLoaded', () => {
     let scroll = calcScroll();
 
     function showModal(modal) {
-        modal.classList.remove('fade-out');
-        overlay.classList.remove('fade-out');
-        overlay.classList.add('fade-in');
-        modal.classList.add('fade-in');
+        modal.classList.remove('fadeOut');
+        overlay.classList.remove('fadeOut');
+        overlay.classList.add('fadeIn');
+        modal.classList.add('fadeIn');
         overlay.style.display = 'block';
         modal.style.display = 'block';
         document.body.style.marginRight = `${scroll}px`;       
@@ -165,10 +165,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeModal(modal) {
-        modal.classList.remove('fade-in');
-        overlay.classList.remove('fade-in');
-        modal.classList.add('fade-out');
-        overlay.classList.add('fade-out');
+        modal.classList.remove('fadeIn');
+        overlay.classList.remove('fadeIn');
+        modal.classList.add('fadeOut');
+        overlay.classList.add('fadeOut');
         document.body.style.overflow = '';
         document.body.style.marginRight = '0px';
         upElem.style.right = '40px';
@@ -374,13 +374,13 @@ window.addEventListener('DOMContentLoaded', () => {
           body = document.body;
 
     window.addEventListener('scroll', () => {
-        if (element.scrollTop > 1600) {
-            upElem.classList.add('fade-in');
-            upElem.classList.remove('fade-out');
+        if (element.scrollTop >= 1600) {
+            upElem.classList.remove('fadeOut');
+            upElem.classList.add('fadeIn');
             upElem.style.display = 'block';
         } else {
-            upElem.classList.add('fade-out');
-            upElem.classList.remove('fade-in');
+            upElem.classList.remove('fadeIn');
+            upElem.classList.add('fadeOut');
             upElem.style.display = 'none';
         }
     });
@@ -431,4 +431,21 @@ window.addEventListener('DOMContentLoaded', () => {
         }, timeInterval);
     };
     callUpScroll();
+
+    // Animation review
+    const reviewItem = document.querySelectorAll('.reviews__item');
+    
+    window.addEventListener('scroll', () => { 
+        if (element.scrollTop > 3400) {
+            reviewItem.forEach((item, i) => {
+                item.classList.add('fadeInUp');
+                item.style.animationDuration = `${i+=1}s`;
+            });
+        } else {
+            reviewItem.forEach(item => {
+                item.classList.remove('fadeInUp');
+                item.style.animationDuration = '';
+            });
+        }
+    });
 });
