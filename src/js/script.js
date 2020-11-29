@@ -161,6 +161,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'block';
         document.body.style.marginRight = `${scroll}px`;       
         document.body.style.overflow = 'hidden';
+        upElem.style.right = `${40 + scroll}px`;
     }
 
     function closeModal(modal) {
@@ -170,6 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
         overlay.classList.add('fade-out');
         document.body.style.overflow = '';
         document.body.style.marginRight = '0px';
+        upElem.style.right = '40px';
         setTimeout(() => {
             overlay.style.display = 'none';
             modal.style.display = 'none';
@@ -225,7 +227,7 @@ window.addEventListener('DOMContentLoaded', () => {
     closeModalByOverlay(modalOrder);
     closeModalByOverlay(modalThanks);
 
-    // Jump scroll
+    // Remove scroll jump
     function calcScroll() {
         const div = document.createElement('div');
         div.style.width = '50px';
@@ -365,4 +367,68 @@ window.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('blur', createMask);
         item.addEventListener('focus', createMask);
     });
+
+    // smooth scroll
+    const upElem = document.querySelector('.pageup'),
+          element = document.documentElement,
+          body = document.body;
+
+    window.addEventListener('scroll', () => {
+        if (element.scrollTop > 1600) {
+            upElem.classList.add('fade-in');
+            upElem.classList.remove('fade-out');
+            upElem.style.display = 'block';
+        } else {
+            upElem.classList.add('fade-out');
+            upElem.classList.remove('fade-in');
+            upElem.style.display = 'none';
+        }
+    });
+
+    const callUpScroll = () => {
+        upElem.addEventListener('click', function(e) {
+
+            let scrollHeight = Math.round(body.scrollTop || element.scrollTop);
+            
+            if (this.hash !=='') {
+                e.preventDefault();
+                let hashElement = document.querySelector(this.hash),
+                    hashElementTop = 0;
+                
+                while(hashElement.offsetParent) {
+                    hashElementTop += hashElement.offsetTop;
+                    hashElement = hashElement.offsetParent;
+                }
+
+                hashElementTop = Math.round(hashElementTop);
+                smoothScroll(scrollHeight, hashElementTop, this.hash);
+            }
+        });
+    };
+
+    const smoothScroll = (from, to, hash) => {
+        let timeInterval = 1,
+            prevScrollTop,
+            speed;
+
+        if (to > from) {
+            speed = 30;
+        } else {
+            speed = -30;
+        }
+
+        let move = setInterval(function() {
+            let scrollHeight = Math.round(body.scrollTop || element.scrollTop);
+
+            if (prevScrollTop === scrollHeight || (to > from && scrollHeight >= to) || (to < from && scrollHeight <= to)) {
+                clearInterval(move);
+                // history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, '') + hash);
+            } else {
+                body.scrollTop += speed;
+                element.scrollTop += speed;
+                prevScrollTop = scrollHeight;
+            }
+        }, timeInterval);
+    };
+    callUpScroll();
 });
