@@ -453,7 +453,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         // second way
         // if (reviewBlock.getBoundingClientRect().y < 0) {
-        //     alert("You've scrolled past the second div");
+        //     write something;
         // }
     });
 });

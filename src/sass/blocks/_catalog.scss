@@ -134,6 +134,9 @@
                 transform: translateX(-100%);
                 margin-left: 0;
             }
+            ul {
+                padding-left: 0;
+            }
             li {
                 position: relative;
                 color: #555555;
@@ -146,8 +149,8 @@
                     width: 5px;
                     height: 5px;
                     background-color: $main_color;
-                    left: -14px;
-                    top: 7px;
+                    left: -16px;
+                    top: 8px;
                 }
             }
         }
