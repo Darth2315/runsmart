@@ -433,19 +433,27 @@ window.addEventListener('DOMContentLoaded', () => {
     callUpScroll();
 
     // Animation review
-    const reviewItem = document.querySelectorAll('.reviews__item');
-    
     window.addEventListener('scroll', () => { 
-        if (element.scrollTop > 3400) {
+        const reviewItem = document.querySelectorAll('.reviews__item'),
+              reviewBlock = document.querySelector('.reviews');
+
+        if (window.scrollY > reviewBlock.offsetTop - 600) {
+            console.log("You've scrolled to reviews section");
             reviewItem.forEach((item, i) => {
                 item.classList.add('fadeInUp');
+                item.classList.add('fadeIn');
                 item.style.animationDuration = `${i+=1}s`;
             });
         } else {
             reviewItem.forEach(item => {
                 item.classList.remove('fadeInUp');
+                item.classList.remove('fadeIn');
                 item.style.animationDuration = '';
             });
         }
+        // second way
+        // if (reviewBlock.getBoundingClientRect().y < 0) {
+        //     alert("You've scrolled past the second div");
+        // }
     });
 });
