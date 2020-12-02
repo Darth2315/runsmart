@@ -458,14 +458,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // add iframe
-    // function addIframe() {
-    //     const footer = document.querySelector('.footer'),
-    //           map = document.createElement('div');
-    //     map.innerHTML = `
-    //     <iframe class="footer__iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10143.233810119555!2d30.60063889766774!3d50.53773388619132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4d13e7ca501f9%3A0xc74c61c8ec57a63f!2z0YPQuy4g0JzQuNC70L7RgdC70LDQstGB0LrQsNGPLCAyLCDQmtC40LXQsiwgMDIwMDA!5e0!3m2!1sru!2sua!4v1605970184413!5m2!1sru!2sua" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-    //     `;
- 
-    //     footer.append(map);
-    // }
-    // addIframe();
+    function addIframe() {
+        const footer = document.querySelector('.footer'),
+              map = document.createElement('div');
+        map.innerHTML = `
+        <iframe class="footer__iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10143.233810119555!2d30.60063889766774!3d50.53773388619132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4d13e7ca501f9%3A0xc74c61c8ec57a63f!2z0YPQuy4g0JzQuNC70L7RgdC70LDQstGB0LrQsNGPLCAyLCDQmtC40LXQsiwgMDIwMDA!5e0!3m2!1sru!2sua!4v1605970184413!5m2!1sru!2sua" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        `;
+        footer.append(map);
+    }
+    addIframe();
 });
