@@ -52,8 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // arrow next
-    next.addEventListener('click', () => {
+    function moveNext() {
         if (offset == +width.slice(0, width.length -2) * (slides.length - 1)) {
             offset = 0;
         } else {
@@ -67,10 +66,9 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex++;
         }
         currentDot();
-    });
-
-    // arrow prev
-    prev.addEventListener('click', () => {
+    }
+ 
+    function movePrev() {
         if (offset == 0) {
             offset = +width.slice(0, width.length - 2) * (slides.length - 1);
         } else {
@@ -84,10 +82,37 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex--;
         }
         currentDot();
+    }
+
+    // arrow next
+    next.addEventListener('click', () => {
+        moveNext();
     });
 
-    // TABS
+    // arrow prev
+    prev.addEventListener('click', () => {
+        movePrev();
+    });
 
+    // swipe
+    function swiper() {
+        slides.forEach(item => {
+            item.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.targetTouches[0];
+                var midpoint = Math.floor(screen.width/2);
+                var px = touch.pageX;
+                if (px < midpoint) {
+                    movePrev();
+                } else {
+                    moveNext();
+                }
+            });
+        });
+    }
+    swiper();
+
+    // TABS
     const tabContent = document.querySelectorAll('.catalog__content'),
           tabWrapper = document.querySelector('.catalog__tabs'),
           tabs = document.querySelectorAll('.catalog__tab');
@@ -171,7 +196,7 @@ window.addEventListener('DOMContentLoaded', () => {
         overlay.classList.add('fadeOut');
         document.body.style.overflow = '';
         document.body.style.marginRight = '0px';
-        upElem.style.right = '40px';
+        upElem.style.right = '';
         setTimeout(() => {
             overlay.style.display = 'none';
             modal.style.display = 'none';
@@ -368,69 +393,54 @@ window.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('focus', createMask);
     });
 
-    // smooth scroll
-    const upElem = document.querySelector('.pageup'),
-          element = document.documentElement,
-          body = document.body;
-
+    // smoth scroll
+    const upElem = document.querySelector('.pageup');
+    
     window.addEventListener('scroll', () => {
-        if (element.scrollTop >= 1600) {
-            upElem.classList.remove('fadeOut');
+        if (document.documentElement.scrollTop > 1600) {
             upElem.classList.add('fadeIn');
+            upElem.classList.remove('fadeOut');
             upElem.style.display = 'block';
         } else {
-            upElem.classList.remove('fadeIn');
             upElem.classList.add('fadeOut');
+            upElem.classList.remove('fadeIn');
             upElem.style.display = 'none';
         }
     });
 
-    const callUpScroll = () => {
-        upElem.addEventListener('click', function(e) {
+    // Smooth scrolling with requestAnimationFrame
+    const links = document.querySelectorAll('[href^="#"]'),
+          speed = 0.3;
 
-            let scrollHeight = Math.round(body.scrollTop || element.scrollTop);
-            
-            if (this.hash !=='') {
-                e.preventDefault();
-                let hashElement = document.querySelector(this.hash),
-                    hashElementTop = 0;
-                
-                while(hashElement.offsetParent) {
-                    hashElementTop += hashElement.offsetTop;
-                    hashElement = hashElement.offsetParent;
+    links.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            let widthTop = document.documentElement.scrollTop,
+                hash = this.hash,
+                toBlock = document.querySelector(hash).getBoundingClientRect().top,
+                start = null;
+
+            requestAnimationFrame(step);
+
+            function step(time) {
+                if (start === null) {
+                    start = time;
                 }
 
-                hashElementTop = Math.round(hashElementTop);
-                smoothScroll(scrollHeight, hashElementTop, this.hash);
+                let progress = time - start,
+                    r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock));
+
+                document.documentElement.scrollTo(0, r);
+
+                if (r != widthTop + toBlock) {
+                    requestAnimationFrame(step);
+                } else {
+                    // location.hash = hash;
+                }
             }
         });
-    };
-
-    const smoothScroll = (from, to, hash) => {
-        let timeInterval = 1,
-            prevScrollTop,
-            speed;
-
-        if (to > from) {
-            speed = 30;
-        } else {
-            speed = -30;
-        }
-
-        let move = setInterval(function() {
-            let scrollHeight = Math.round(body.scrollTop || element.scrollTop);
-
-            if (prevScrollTop === scrollHeight || (to > from && scrollHeight >= to) || (to < from && scrollHeight <= to)) {
-                clearInterval(move);
-                // history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, '') + hash);
-            } else {
-                body.scrollTop += speed;
-                element.scrollTop += speed;
-                prevScrollTop = scrollHeight;
-            }
-        }, timeInterval);
-    };
-    callUpScroll();
+    });
 
     // Animation review
     window.addEventListener('scroll', () => { 
@@ -457,11 +467,11 @@ window.addEventListener('DOMContentLoaded', () => {
         // }
     });
 
-    // add iframe
+    // add google map iframe
     function addIframe() {
         const footer = document.querySelector('.footer'),
               map = document.createElement('div');
-        map.innerHTML = `
+              map.innerHTML = `
         <iframe class="footer__iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10143.233810119555!2d30.60063889766774!3d50.53773388619132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4d13e7ca501f9%3A0xc74c61c8ec57a63f!2z0YPQuy4g0JzQuNC70L7RgdC70LDQstGB0LrQsNGPLCAyLCDQmtC40LXQsiwgMDIwMDA!5e0!3m2!1sru!2sua!4v1605970184413!5m2!1sru!2sua" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
         `;
         footer.append(map);
